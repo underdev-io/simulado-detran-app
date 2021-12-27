@@ -8,12 +8,26 @@ import {
   Row,
   Column,
   VStack,
+  Radio,
 } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
 import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
 import * as StoreReview from "expo-store-review";
+import { useState } from "react";
+
+/**
+ * TODOs:
+ *
+ * 1) Tela após navegar para a próxima questão (mostrar a alternativa certa, se errou ou não)
+ * 2) Tela final (após a última pergunta)
+ * 3) Carregar questões dos JSONs
+ * 4) Persistir na tela final para o LocalStorage de Ranking
+ * 5) Incluir AdMob
+ * 6) Contador no Quiz: reduzir a cada segundo
+ * 7) Contador no Quiz: ao finalizar o tempo, mandar para a tela final
+ * */
 
 const HomeScreen = ({ navigation }: any) => {
   return (
@@ -63,6 +77,7 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 const QuizScreen = ({ navigation }: any) => {
+  const [value, setValue] = useState("one");
   return (
     <Box
       backgroundColor="white"
@@ -72,15 +87,56 @@ const QuizScreen = ({ navigation }: any) => {
       px={10}
     >
       <StatusBar style="auto" />
-      <Heading>QUIZ</Heading>
-      <Button
-        width="100%"
-        mt={5}
-        size="lg"
-        onPress={() => navigation.navigate("Home")}
-      >
-        DESISTIR
-      </Button>
+      <Heading>00:30:00</Heading>
+      <Text mt={2}>
+        O condutor, atento, trafegando em uma viz, ve uma placa alertando sobre
+        um estreitamento de pista adiante. Ele identifica esta placa como sendo
+        de:
+      </Text>
+
+      <Box width="100%" mt={2}>
+        <Radio.Group
+          name="myRadioGroup"
+          value={value}
+          onChange={(nextValue) => {
+            setValue(nextValue);
+          }}
+        >
+          <Radio size="sm" value="A" my={1}>
+            A - Procurar um telefone e chamar o serviço médico especializado
+          </Radio>
+          <Radio size="sm" value="B" my={1}>
+            B - Remover a vítima para o hospital
+          </Radio>
+          <Radio size="sm" value="C" my={1}>
+            C - Não parar para socorrer
+          </Radio>
+          <Radio size="sm" value="D" my={1}>
+            D - Proteger a cabeça e a coluna das vítimas
+          </Radio>
+          <Radio size="sm" value="E" my={1}>
+            E - Remover as vítimas do veículo
+          </Radio>
+        </Radio.Group>
+      </Box>
+      <VStack width="100%" space={5} position="absolute" bottom={10}>
+        <Button
+          width="100%"
+          size="lg"
+          onPress={() => navigation.navigate("Home")}
+        >
+          PRÓXIMO
+        </Button>
+        <Button
+          width="100%"
+          size="lg"
+          onPress={() => navigation.navigate("Home")}
+          colorScheme="secondary"
+          variant="subtle"
+        >
+          ENCERRAR
+        </Button>
+      </VStack>
     </Box>
   );
 };
