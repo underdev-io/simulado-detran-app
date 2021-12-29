@@ -17,7 +17,7 @@ import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
 import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
 import * as StoreReview from "expo-store-review";
 import { useState } from "react";
-import { Linking } from "react-native";
+import { Alert, Linking } from "react-native";
 
 const QuizScreen = ({ navigation }: any) => {
   const [value, setValue] = useState("");
@@ -74,9 +74,24 @@ const QuizScreen = ({ navigation }: any) => {
       setIsCorrect(false);
       setValue("");
     } else {
-      console.log(`total certo: ${correctAnswers}`);
-      console.log(`total errado: ${wrongAnswers}`);
+      navigation.navigate("FinishQuiz", { correctAnswers, wrongAnswers });
     }
+  };
+
+  const handleFinish = () => {
+    Alert.alert(
+      "Encerrar simulado",
+      "Você tem certeza que deseja encerrar o simulado?",
+      [
+        {
+          text: "Encerrar",
+          onPress: () => {
+            navigation.navigate("FinishQuiz", { correctAnswers, wrongAnswers });
+          },
+        },
+        { text: "Fechar" },
+      ]
+    );
   };
 
   const getRadioColor = (index: number) => {
@@ -152,7 +167,7 @@ const QuizScreen = ({ navigation }: any) => {
         <Button
           width="100%"
           size="lg"
-          onPress={() => navigation.navigate("Home")}
+          onPress={handleFinish}
           colorScheme="secondary"
           variant="subtle"
         >

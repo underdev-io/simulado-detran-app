@@ -12,6 +12,7 @@ import {
   extendTheme,
 } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
+import { HeaderBackButton } from "@react-navigation/elements";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
 import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
@@ -19,11 +20,11 @@ import * as StoreReview from "expo-store-review";
 import { useState } from "react";
 import { Linking } from "react-native";
 import QuizScreen from "./screens/Quiz";
-
+import FinishQuiz from "./screens/FinishQuiz";
+import { Button as RNButton } from "react-native";
 /**
  * TODOs:
  *
- * 1) Tela após navegar para a próxima questão (mostrar a alternativa certa, se errou ou não)
  * 2) Tela final (após a última pergunta)
  * 3) Carregar questões dos JSONs
  * 4) Persistir na tela final para o LocalStorage de Ranking
@@ -164,6 +165,22 @@ export default function App() {
             name="Quiz"
             options={{ headerShown: false }}
             component={QuizScreen}
+          />
+          <Stack.Screen
+            name="FinishQuiz"
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerBackTitle: "Voltar",
+              headerTitle: "Resultado",
+              headerLeft: () => (
+                <HeaderBackButton
+                  label="Voltar"
+                  labelVisible
+                  onPress={() => navigation.navigate("Home")}
+                />
+              ),
+            })}
+            component={FinishQuiz}
           />
           <Stack.Screen
             name="Ranking"
