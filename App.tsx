@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }: any) => {
         width="100%"
         mt={5}
         size="lg"
-        onPress={() => navigation.navigate("Quiz")}
+        onPress={() => navigation.push("Quiz")}
       >
         COMEÇAR
       </Button>
