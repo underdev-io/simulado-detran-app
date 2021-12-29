@@ -9,6 +9,7 @@ import {
   Column,
   VStack,
   Radio,
+  extendTheme,
 } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -16,6 +17,7 @@ import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
 import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
 import * as StoreReview from "expo-store-review";
 import { useState } from "react";
+import { Linking } from "react-native";
 
 /**
  * TODOs:
@@ -31,17 +33,11 @@ import { useState } from "react";
 
 const HomeScreen = ({ navigation }: any) => {
   return (
-    <Box
-      backgroundColor="white"
-      flex="1"
-      alignItems="center"
-      justifyContent="center"
-      px={10}
-    >
+    <Box flex="1" alignItems="center" justifyContent="center" px={10}>
       <StatusBar style="auto" />
       <Illustration width="100%" height="30%" />
-      <Heading>CNH Simulado Prova</Heading>
-      <Text fontSize="sm" mt={4}>
+      <Heading>Simulado CNH DETRAN</Heading>
+      <Text textAlign={"center"} fontSize="sm" mt={2}>
         Preparado para testar seus conhecimentos?
       </Text>
       <Button
@@ -54,6 +50,7 @@ const HomeScreen = ({ navigation }: any) => {
       </Button>
       <Button
         width="100%"
+        size="lg"
         mt={4}
         variant="subtle"
         onPress={() => navigation.navigate("Ranking")}
@@ -62,8 +59,9 @@ const HomeScreen = ({ navigation }: any) => {
       </Button>
       <Button
         width="100%"
-        mt={4}
-        variant="subtle"
+        size="sm"
+        mt={2}
+        variant="link"
         onPress={async () => {
           if (await StoreReview.hasAction()) {
             StoreReview.requestReview();
@@ -72,6 +70,23 @@ const HomeScreen = ({ navigation }: any) => {
       >
         AVALIAR APP
       </Button>
+      <Text
+        onPress={() => {
+          try {
+            Linking.openURL("https://underdev.io");
+          } catch (e) {}
+        }}
+        fontSize={"xs"}
+        mt={5}
+        position={"absolute"}
+        bottom={10}
+      >
+        Criado por{" "}
+        <Text fontWeight={"bold"} color={"primary"}>
+          Underdev Ⓒ
+        </Text>{" "}
+        2022
+      </Text>
     </Box>
   );
 };
@@ -182,8 +197,26 @@ const RankingScreen = ({ navigation }: any) => {
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const theme = extendTheme({
+    colors: {
+      // Add new color
+      primary: {
+        50: "#dafffb",
+        100: "#b1f9f1",
+        200: "#86f5e6",
+        300: "#58efdc",
+        400: "#2eebd2",
+        500: "#14d1b9",
+        600: "#02a390",
+        700: "#007567",
+        800: "#00473e",
+        900: "#001916",
+      },
+    },
+  });
+
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
