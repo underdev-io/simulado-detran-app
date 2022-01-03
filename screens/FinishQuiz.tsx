@@ -2,8 +2,11 @@ import { Box, Button, Heading, Text } from "native-base";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const FinishQuizScreen = ({ route, navigation }: any) => {
-  const { correctAnswers, wrongAnswers } = route.params;
+  const { correctAnswers, wrongAnswers, duration } = route.params;
   const isApproved = correctAnswers >= 1;
+
+  const minutes = Math.floor(duration / 60);
+  const seconds = Number(duration - minutes * 60);
 
   return (
     <Box backgroundColor="white" flex="1" justifyContent={"center"} px={10}>
@@ -67,7 +70,10 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
       </Box>
       <Box background={"trueGray.100"} padding={3} borderRadius={10} mt={5}>
         <Text>Tempo de prova</Text>
-        <Heading>00:15:26</Heading>
+        <Heading>
+          {minutes >= 10 ? minutes : `0${minutes}`}:
+          {seconds >= 10 ? seconds : `0${seconds}`}
+        </Heading>
       </Box>
       <Button
         width="100%"

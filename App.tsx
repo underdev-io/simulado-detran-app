@@ -25,10 +25,9 @@ import { Button as RNButton } from "react-native";
 /**
  * TODOs:
  *
- * 1) Contador no Quiz: reduzir a cada segundo
  * 2) Carregar questões dos JSONs
  * 3) Persistir na tela final para o LocalStorage de Ranking
- * 4) Contador no Quiz: ao finalizar o tempo, mandar para a tela final
+ * 4) Contador no Quiz: ao finalizar o tempo, mandar para a tela final (bug, contador continua rolando)
  * 5) Incluir AdMob
  * */
 

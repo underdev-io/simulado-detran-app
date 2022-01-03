@@ -1,23 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  NativeBaseProvider,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Row,
-  Column,
-  VStack,
-  Radio,
-  extendTheme,
-} from "native-base";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
-import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
-import * as StoreReview from "expo-store-review";
-import { useState } from "react";
-import { Alert, Linking } from "react-native";
+import { Box, Heading, Text, Button, VStack, Radio } from "native-base";
+import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 
 const QuizScreen = ({ navigation }: any) => {
   const [value, setValue] = useState("");
@@ -26,6 +10,34 @@ const QuizScreen = ({ navigation }: any) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+
+  const DURATION_IN_MINS = 1;
+  const DURATION_IN_SECONDS = DURATION_IN_MINS * 60;
+
+  const [duration, setDuration] = useState(DURATION_IN_SECONDS);
+
+  const timer = () => setDuration(duration - 1);
+
+  useEffect(() => {
+    if (duration <= 0) {
+      finishQuiz();
+    }
+
+    const id = setInterval(timer, 1000);
+
+    return () => clearInterval(id);
+  }, [duration]);
+
+  const minutes = Math.floor(duration / 60);
+  const seconds = Number(duration - minutes * 60);
+
+  const finishQuiz = () => {
+    navigation.navigate("FinishQuiz", {
+      correctAnswers,
+      wrongAnswers,
+      duration: duration.toString(),
+    });
+  };
 
   const questions = [
     {
@@ -74,7 +86,7 @@ const QuizScreen = ({ navigation }: any) => {
       setIsCorrect(false);
       setValue("");
     } else {
-      navigation.navigate("FinishQuiz", { correctAnswers, wrongAnswers });
+      finishQuiz();
     }
   };
 
@@ -86,7 +98,7 @@ const QuizScreen = ({ navigation }: any) => {
         {
           text: "Encerrar",
           onPress: () => {
-            navigation.navigate("FinishQuiz", { correctAnswers, wrongAnswers });
+            finishQuiz();
           },
         },
         { text: "Fechar" },
@@ -127,7 +139,10 @@ const QuizScreen = ({ navigation }: any) => {
         <Heading>
           {currentQuestion + 1}/{questions.length}
         </Heading>
-        <Heading>00:30:00</Heading>
+        <Heading>
+          {minutes >= 10 ? minutes : `0${minutes}`}:
+          {seconds >= 10 ? seconds : `0${seconds}`}
+        </Heading>
       </Box>
       <Text mt={2}>{question.title}</Text>
 
