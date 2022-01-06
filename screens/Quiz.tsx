@@ -12,7 +12,7 @@ const QuizScreen = ({ navigation }: any) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
 
   const DURATION_IN_MINS = 1;
-  const DURATION_IN_SECONDS = DURATION_IN_MINS * 60;
+  const DURATION_IN_SECONDS = DURATION_IN_MINS * 10;
 
   const [duration, setDuration] = useState(DURATION_IN_SECONDS);
 
@@ -20,7 +20,7 @@ const QuizScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     if (duration <= 0) {
-      finishQuiz();
+      return finishQuiz();
     }
 
     const id = setInterval(timer, 1000);
@@ -35,7 +35,7 @@ const QuizScreen = ({ navigation }: any) => {
     navigation.navigate("FinishQuiz", {
       correctAnswers,
       wrongAnswers,
-      duration: duration.toString(),
+      duration,
     });
   };
 
@@ -111,10 +111,10 @@ const QuizScreen = ({ navigation }: any) => {
 
     if (showCorrectOption) {
       if (value === target) {
-        return isCorrect ? "green.500" : "red.500";
+        return isCorrect ? "green.900" : "red.900";
       }
 
-      if (target === question.correctOption.toString()) return "green.500";
+      if (target === question.correctOption.toString()) return "green.900";
     }
 
     return null;

@@ -15,16 +15,18 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
           display="flex"
           flexDirection={"row"}
           alignItems={"center"}
-          background="green.500"
+          background="transparent"
+          borderWidth={"2px"}
+          borderColor="green.300"
           padding={5}
           borderRadius={10}
           mt={5}
           mb={5}
         >
-          <AntDesign name="Trophy" size={52} color="black" />
+          <AntDesign name="Trophy" size={52} color="#22c55e" />
           <Box flexShrink={1} ml={4}>
-            <Heading>Parabéns!</Heading>
-            <Text>
+            <Heading color="green.500">Parabéns!</Heading>
+            <Text color="green.900">
               Você foi aprovado com{" "}
               <Text fontWeight={"bold"}>{correctAnswers} respostas</Text>{" "}
               corretas.
@@ -37,7 +39,9 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
           display="flex"
           flexDirection={"row"}
           alignItems={"center"}
-          background="danger.300"
+          background="transparent"
+          borderWidth={"2px"}
+          borderColor="danger.300"
           padding={5}
           borderRadius={10}
           mt={5}
@@ -46,13 +50,13 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
           <MaterialCommunityIcons
             name="emoticon-sad-outline"
             size={52}
-            color="black"
+            color="#ef4444"
           />
 
           <Box flexShrink={1} ml={4}>
-            <Heading>Ops...</Heading>
+            <Heading color="red.500">Ops...</Heading>
 
-            <Text mt={2}>
+            <Text color="red.500" mt={2}>
               Faltaram{" "}
               <Text fontWeight={"bold"}>{21 - correctAnswers} respostas</Text>{" "}
               para você ser aprovado(a).
@@ -60,11 +64,11 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
           </Box>
         </Box>
       )}
-      <Box background={"trueGray.100"} padding={3} borderRadius={10}>
+      <Box background={"green.50"} padding={3} borderRadius={10}>
         <Text>Respostas corretas</Text>
         <Heading>{correctAnswers}</Heading>
       </Box>
-      <Box background={"trueGray.100"} padding={3} borderRadius={10} mt={5}>
+      <Box background={"red.50"} padding={3} borderRadius={10} mt={5}>
         <Text>Respostas erradas</Text>
         <Heading>{wrongAnswers}</Heading>
       </Box>
@@ -86,8 +90,7 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
       </Button>
       <Button
         width="100%"
-        variant={"subtle"}
-        colorScheme="secondary"
+        variant={"link"}
         onPress={() => {
           navigation.push("Home");
         }}
