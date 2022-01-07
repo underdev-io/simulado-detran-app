@@ -25,10 +25,16 @@ import { Button as RNButton } from "react-native";
 /**
  * TODOs:
  *
- * 2) Carregar questões dos JSONs
- * 3) Persistir na tela final para o LocalStorage de Ranking
- * 4) Contador no Quiz: ao finalizar o tempo, mandar para a tela final (bug, contador continua rolando)
- * 5) Incluir AdMob
+ * 1) Perguntas com imagem não aparecem
+ * 2) Aumentar o tamanho dos textos das perguntas
+ * 3) Para ser aprovado, o mínimo é 21 questões
+ * 4) Calcular a diferença do tempo da prova com o tempo final
+ * 5) Cadastrar mais perguntas
+ * 6) Texto das perguntas tá centralizado (deveria estar alinhado a esquerda)
+ * 7) Botão back do Android tem que acionar o botão de Encerrar
+ * 8) Título no Android do Finish Quiz está errado
+ * 9) Persistir na tela final para o LocalStorage de Ranking
+ * 10) Incluir AdMob
  * */
 
 const HomeScreen = ({ navigation }: any) => {
