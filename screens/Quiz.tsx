@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { Box, Heading, Text, Button, VStack, Radio } from "native-base";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
+import QuizService from "../services/QuizService";
 
 const QuizScreen = ({ navigation }: any) => {
   const [value, setValue] = useState("");
@@ -10,9 +11,11 @@ const QuizScreen = ({ navigation }: any) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [questions] = useState(QuizService.fetchAll());
 
-  const DURATION_IN_MINS = 1;
-  const DURATION_IN_SECONDS = DURATION_IN_MINS * 10;
+  // Timer
+  const DURATION_IN_MINS = 60;
+  const DURATION_IN_SECONDS = DURATION_IN_MINS * 60;
 
   const [duration, setDuration] = useState(DURATION_IN_SECONDS);
 
@@ -38,31 +41,6 @@ const QuizScreen = ({ navigation }: any) => {
       duration,
     });
   };
-
-  const questions = [
-    {
-      title:
-        "Excetuando-se as infrações resultantes do excesso de peso, será sempre responsável pelo pagamento da penalidade de multa o:",
-      alternatives: [
-        "Condutor do veículo",
-        "Passageiro do veículo",
-        "Agente da autoridade de trânsito",
-        "Proprietário do veículo",
-      ],
-      correctOption: 4,
-    },
-    {
-      title:
-        "Os veículos vermelhos, ilustrados na imagem, estão cometendo a seguinte infração de estacionamento:",
-      alternatives: [
-        "Fila dupla",
-        "Impedindo a movimentação de outro veículo",
-        "Afastado da guia da calçada a mais de 1 (um) metro",
-        "Em local e horário proibidos especificamente pela sinalização",
-      ],
-      correctOption: 3,
-    },
-  ];
 
   const question = questions[currentQuestion];
 
@@ -111,10 +89,10 @@ const QuizScreen = ({ navigation }: any) => {
 
     if (showCorrectOption) {
       if (value === target) {
-        return isCorrect ? "green.900" : "red.900";
+        return isCorrect ? "green.700" : "red.700";
       }
 
-      if (target === question.correctOption.toString()) return "green.900";
+      if (target === question.correctOption.toString()) return "green.700";
     }
 
     return null;
@@ -154,7 +132,7 @@ const QuizScreen = ({ navigation }: any) => {
             setValue(nextValue);
           }}
         >
-          {question.alternatives.map((alternative, index) => (
+          {question.alternatives.map((alternative: string, index: number) => (
             <Radio
               isDisabled={showCorrectOption}
               size="sm"

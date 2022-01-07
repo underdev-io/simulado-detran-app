@@ -17,19 +17,18 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
           alignItems={"center"}
           background="transparent"
           borderWidth={"2px"}
-          borderColor="green.300"
+          borderColor="primary.500"
           padding={5}
           borderRadius={10}
           mt={5}
           mb={5}
         >
-          <AntDesign name="Trophy" size={52} color="#22c55e" />
+          <AntDesign name="Trophy" size={52} color="#14d1b9" />
           <Box flexShrink={1} ml={4}>
-            <Heading color="green.500">Parabéns!</Heading>
-            <Text color="green.900">
-              Você foi aprovado com{" "}
-              <Text fontWeight={"bold"}>{correctAnswers} respostas</Text>{" "}
-              corretas.
+            <Heading color="primary.500">Parabéns!</Heading>
+            <Text color="primary.900">Você foi aprovado com</Text>
+            <Text color="primary.500" fontWeight={"bold"}>
+              {correctAnswers} respostas corretas.
             </Text>
           </Box>
         </Box>
