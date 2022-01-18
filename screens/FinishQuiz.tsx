@@ -5,8 +5,13 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
   const { correctAnswers, wrongAnswers, duration } = route.params;
   const isApproved = correctAnswers >= 21;
 
-  const minutes = Math.floor(duration / 60);
-  const seconds = Number(duration - minutes * 60);
+  const DURATION_IN_MINS = 60;
+  const DURATION_IN_SECONDS = DURATION_IN_MINS * 60;
+
+  const durationDiff = DURATION_IN_SECONDS - duration;
+
+  const minutes = Math.floor(durationDiff / 60);
+  const seconds = Number(durationDiff - minutes * 60);
 
   return (
     <Box backgroundColor="white" flex="1" justifyContent={"center"} px={10}>
