@@ -136,16 +136,15 @@ const QuizScreen = ({ navigation }: any) => {
           alt="Imagem da questão"
           width={"100%"}
           height={150}
-          source={{
-            uri: question.image,
-          }}
+          resizeMode="contain"
+          src={question.image}
         />
       )}
       <ScrollView
         p={1}
         alignSelf={"flex-start"}
         width="100%"
-        maxHeight={"400px"}
+        maxHeight={"350px"}
       >
         <Text mt={2} alignSelf={"flex-start"} fontSize={19}>
           {question.title}
@@ -166,6 +165,7 @@ const QuizScreen = ({ navigation }: any) => {
                 _text={{
                   fontSize: 17,
                   color: getRadioColor(index),
+                  flexShrink: 1,
                 }}
                 value={(index + 1).toString()}
                 my={1}
