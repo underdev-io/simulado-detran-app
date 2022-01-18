@@ -12,7 +12,8 @@ const fetchAll = () => {
     .map((key) => {
       return questions[key].questions;
     })
-    .reduce((prev, curr) => [...prev, ...curr], []);
+    .reduce((prev, curr) => [...prev, ...curr], [])
+    .filter((question: any) => question.alternatives.length > 0);
   shuffleArray(response);
 
   return response.slice(0, 30);

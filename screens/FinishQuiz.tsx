@@ -3,7 +3,7 @@ import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const FinishQuizScreen = ({ route, navigation }: any) => {
   const { correctAnswers, wrongAnswers, duration } = route.params;
-  const isApproved = correctAnswers >= 1;
+  const isApproved = correctAnswers >= 21;
 
   const minutes = Math.floor(duration / 60);
   const seconds = Number(duration - minutes * 60);

@@ -1,5 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import { Box, Heading, Text, Button, VStack, Radio } from "native-base";
+import {
+  Box,
+  Heading,
+  Text,
+  Button,
+  VStack,
+  Radio,
+  Image,
+  ScrollView,
+} from "native-base";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import QuizService from "../services/QuizService";
@@ -122,32 +131,52 @@ const QuizScreen = ({ navigation }: any) => {
           {seconds >= 10 ? seconds : `0${seconds}`}
         </Heading>
       </Box>
-      <Text mt={2}>{question.title}</Text>
-
-      <Box width="100%" mt={2}>
-        <Radio.Group
-          name="myRadioGroup"
-          value={value}
-          onChange={(nextValue) => {
-            setValue(nextValue);
+      {question.image && (
+        <Image
+          alt="Imagem da questão"
+          width={"100%"}
+          height={150}
+          source={{
+            uri: question.image,
           }}
-        >
-          {question.alternatives.map((alternative: string, index: number) => (
-            <Radio
-              isDisabled={showCorrectOption}
-              size="sm"
-              _text={{
-                color: getRadioColor(index),
-              }}
-              value={(index + 1).toString()}
-              my={1}
-              key={index}
-            >
-              {alternative}
-            </Radio>
-          ))}
-        </Radio.Group>
-      </Box>
+        />
+      )}
+      <ScrollView
+        p={1}
+        alignSelf={"flex-start"}
+        width="100%"
+        maxHeight={"400px"}
+      >
+        <Text mt={2} alignSelf={"flex-start"} fontSize={19}>
+          {question.title}
+        </Text>
+
+        <Box width="100%" mt={2}>
+          <Radio.Group
+            name="myRadioGroup"
+            value={value}
+            onChange={(nextValue) => {
+              setValue(nextValue);
+            }}
+          >
+            {question.alternatives.map((alternative: string, index: number) => (
+              <Radio
+                isDisabled={showCorrectOption}
+                size="sm"
+                _text={{
+                  fontSize: 17,
+                  color: getRadioColor(index),
+                }}
+                value={(index + 1).toString()}
+                my={1}
+                key={index}
+              >
+                {alternative}
+              </Radio>
+            ))}
+          </Radio.Group>
+        </Box>
+      </ScrollView>
       <VStack width="100%" space={5} position="absolute" bottom={10}>
         <Button
           isDisabled={value === ""}
