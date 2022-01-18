@@ -25,7 +25,6 @@ import { Button as RNButton } from "react-native";
 /**
  * TODOs:
  *
- * 1) Perguntas com imagem não aparecem
  * 4) Calcular a diferença do tempo da prova com o tempo final
  * 5) Cadastrar mais perguntas
  * 7) Botão back do Android tem que acionar o botão de Encerrar
