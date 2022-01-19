@@ -1,4 +1,12 @@
-import * as questions from "../questions/*.json";
+import exam1 from "../questions/exam1.json";
+import exam2 from "../questions/exam2.json";
+import exam3 from "../questions/exam3.json";
+import exam4 from "../questions/exam4.json";
+import exam5 from "../questions/exam5.json";
+import exam6 from "../questions/exam6.json";
+import exam7 from "../questions/exam7.json";
+
+const questions: any = [exam1, exam2, exam3, exam4, exam5, exam6, exam7];
 
 const shuffleArray = (array: any[]) => {
   for (let i = array.length - 1; i > 0; i--) {

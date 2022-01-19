@@ -146,6 +146,7 @@ const QuizScreen = ({ navigation }: any) => {
               height={120}
               resizeMode="contain"
               src={question.image}
+              key={question.image}
             />
           )}
           <Text px={10} mt={2} alignSelf={"flex-start"} fontSize={19}>
