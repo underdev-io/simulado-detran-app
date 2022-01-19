@@ -10,8 +10,9 @@ import {
   ScrollView,
 } from "native-base";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, BackHandler } from "react-native";
 import QuizService from "../services/QuizService";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const QuizScreen = ({ navigation }: any) => {
   const [value, setValue] = useState("");
@@ -91,6 +92,8 @@ const QuizScreen = ({ navigation }: any) => {
         { text: "Fechar" },
       ]
     );
+
+    return true;
   };
 
   const getRadioColor = (index: number) => {
@@ -107,56 +110,55 @@ const QuizScreen = ({ navigation }: any) => {
     return null;
   };
 
-  return (
-    <Box
-      backgroundColor="white"
-      flex="1"
-      alignItems="center"
-      justifyContent="center"
-      px={10}
-    >
-      <StatusBar style="auto" />
-      <Box
-        display="flex"
-        flexDirection={"row"}
-        justifyContent={"space-between"}
-        width={"100%"}
-        mb={1}
-      >
-        <Heading>
-          {currentQuestion + 1}/{questions.length}
-        </Heading>
-        <Heading>
-          {minutes >= 10 ? minutes : `0${minutes}`}:
-          {seconds >= 10 ? seconds : `0${seconds}`}
-        </Heading>
-      </Box>
-      {question.image && (
-        <Image
-          alt="Imagem da questão"
-          width={"100%"}
-          height={150}
-          resizeMode="contain"
-          src={question.image}
-        />
-      )}
-      <ScrollView
-        p={1}
-        alignSelf={"flex-start"}
-        width="100%"
-        maxHeight={"350px"}
-      >
-        <Text mt={2} alignSelf={"flex-start"} fontSize={19}>
-          {question.title}
-        </Text>
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleFinish
+    );
 
-        <Box width="100%" mt={2}>
+    return () => backHandler.remove();
+  }, [correctAnswers, wrongAnswers, duration]);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Box flex={1}>
+        <Box
+          display="flex"
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+          width={"100%"}
+          px={10}
+          py={5}
+        >
+          <Heading>
+            {currentQuestion + 1}/{questions.length}
+          </Heading>
+          <Heading>
+            {minutes >= 10 ? minutes : `0${minutes}`}:
+            {seconds >= 10 ? seconds : `0${seconds}`}
+          </Heading>
+        </Box>
+        <ScrollView mb={5} flex={1}>
+          {question.image && (
+            <Image
+              alt="Imagem da questão"
+              width={"100%"}
+              height={120}
+              resizeMode="contain"
+              src={question.image}
+            />
+          )}
+          <Text px={10} mt={2} alignSelf={"flex-start"} fontSize={19}>
+            {question.title}
+          </Text>
+
           <Radio.Group
-            name="myRadioGroup"
+            name="alternatives"
             value={value}
             onChange={(nextValue) => {
               setValue(nextValue);
             }}
+            px={10}
           >
             {question.alternatives.map((alternative: string, index: number) => (
               <Radio
@@ -165,38 +167,38 @@ const QuizScreen = ({ navigation }: any) => {
                 _text={{
                   fontSize: 17,
                   color: getRadioColor(index),
-                  flexShrink: 1,
                 }}
                 value={(index + 1).toString()}
                 my={1}
                 key={index}
+                display={"flex"}
               >
                 {alternative}
               </Radio>
             ))}
           </Radio.Group>
-        </Box>
-      </ScrollView>
-      <VStack width="100%" space={5} position="absolute" bottom={10}>
-        <Button
-          isDisabled={value === ""}
-          width="100%"
-          size="lg"
-          onPress={showCorrectOption ? handleNext : handleAnswer}
-        >
-          {showCorrectOption ? "PRÓXIMA" : "RESPONDER"}
-        </Button>
-        <Button
-          width="100%"
-          size="lg"
-          onPress={handleFinish}
-          colorScheme="secondary"
-          variant="subtle"
-        >
-          ENCERRAR
-        </Button>
-      </VStack>
-    </Box>
+        </ScrollView>
+        <VStack px={10} pb={5} width="100%" space={5}>
+          <Button
+            isDisabled={value === ""}
+            width="100%"
+            size="lg"
+            onPress={showCorrectOption ? handleNext : handleAnswer}
+          >
+            {showCorrectOption ? "PRÓXIMA" : "RESPONDER"}
+          </Button>
+          <Button
+            width="100%"
+            size="lg"
+            onPress={handleFinish}
+            colorScheme="secondary"
+            variant="subtle"
+          >
+            ENCERRAR
+          </Button>
+        </VStack>
+      </Box>
+    </SafeAreaView>
   );
 };
 

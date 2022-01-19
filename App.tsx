@@ -37,9 +37,9 @@ const HomeScreen = ({ navigation }: any) => {
     <Box flex="1" alignItems="center" justifyContent="center" px={10}>
       <StatusBar style="auto" />
       <Illustration width="100%" height="30%" />
-      <Heading>Simulado CNH DETRAN</Heading>
+      <Heading mt={2}>Simulado Prova CNH</Heading>
       <Text textAlign={"center"} fontSize="sm" mt={2}>
-        Preparado para testar seus conhecimentos?
+        Conteúdo atualizado para 2022. Preparado(a)?
       </Text>
       <Button
         width="100%"
@@ -64,6 +64,7 @@ const HomeScreen = ({ navigation }: any) => {
         mt={2}
         variant="link"
         onPress={async () => {
+          Linking.openURL("market://details?id=googoo.android.btgps");
           if (await StoreReview.hasAction()) {
             StoreReview.requestReview();
           }
@@ -170,7 +171,8 @@ export default function App() {
             options={({ navigation }) => ({
               headerShown: true,
               headerBackTitle: "Voltar",
-              headerTitle: "Resultado",
+              headerTitle: "Resultado Final",
+              title: "Resultado Final",
               headerLeft: () => (
                 <HeaderBackButton
                   label="Voltar"
