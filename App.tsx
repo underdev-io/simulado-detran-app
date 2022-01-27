@@ -20,6 +20,9 @@ import * as StoreReview from "expo-store-review";
 import { Linking } from "react-native";
 import QuizScreen from "./screens/Quiz";
 import FinishQuiz from "./screens/FinishQuiz";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { format, parseJSON } from "date-fns";
 
 const HomeScreen = ({ navigation }: any) => {
   return (
@@ -85,8 +88,29 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 const RankingScreen = ({ navigation }: any) => {
-  const rankings: any = [];
+  const [rankings, setRankings] = useState([]);
 
+  useEffect(() => {
+    const callback = async () => {
+      const rankingAsString = await AsyncStorage.getItem(
+        "@SimuladoDetran_Ranking"
+      );
+      const rankingAsObject = rankingAsString
+        ? JSON.parse(rankingAsString)
+        : [];
+      const rankingOrdered = rankingAsObject.sort((a: any, b: any) => {
+        const aDate = parseJSON(a.date);
+        const bDate = parseJSON(b.date);
+
+        return +bDate - +aDate;
+      });
+      const rankingSliced = rankingOrdered.slice(0, 10);
+
+      setRankings(rankingSliced);
+    };
+
+    callback();
+  }, []);
   return (
     <Box backgroundColor="white" flex="1" px={10}>
       <StatusBar style="auto" />
@@ -106,13 +130,17 @@ const RankingScreen = ({ navigation }: any) => {
               justifyContent="space-between"
             >
               <Column>
-                <Text fontWeight="bold">{ranking.name}</Text>
+                <Text fontWeight="bold">
+                  {format(parseJSON(ranking.date), "dd/MM/yy HH:mm")}
+                </Text>
               </Column>
               <Column>
-                <Text>{ranking.score}/30</Text>
+                <Text color={ranking.isApproved ? "green.700" : "red.700"}>
+                  {ranking.correctAnswers}/30
+                </Text>
               </Column>
               <Column>
-                <Text>{ranking.duration}</Text>
+                <Text>{ranking.time}</Text>
               </Column>
             </Row>
           ))}
