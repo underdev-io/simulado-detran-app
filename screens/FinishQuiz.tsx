@@ -1,5 +1,7 @@
 import { Box, Button, Heading, Text } from "native-base";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const FinishQuizScreen = ({ route, navigation }: any) => {
   const { correctAnswers, wrongAnswers, duration } = route.params;
@@ -12,6 +14,33 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
 
   const minutes = Math.floor(durationDiff / 60);
   const seconds = Number(durationDiff - minutes * 60);
+
+  const time = `${minutes >= 10 ? minutes : `0${minutes}`}:${
+    seconds >= 10 ? seconds : `0${seconds}`
+  }`;
+  useEffect(() => {
+    const callback = async () => {
+      const data = {
+        time,
+        correctAnswers,
+        wrongAnswers,
+        isApproved,
+        date: new Date(),
+      };
+
+      const rankingAsString = await AsyncStorage.getItem(
+        "@SimuladoDetran_Ranking"
+      );
+      const ranking = rankingAsString ? JSON.parse(rankingAsString) : [];
+      const rankingUpdated = [...ranking, data];
+      await AsyncStorage.setItem(
+        "@SimuladoDetran_Ranking",
+        JSON.stringify(rankingUpdated)
+      );
+    };
+
+    callback();
+  }, []);
 
   return (
     <Box backgroundColor="white" flex="1" justifyContent={"center"} px={10}>
@@ -78,10 +107,7 @@ const FinishQuizScreen = ({ route, navigation }: any) => {
       </Box>
       <Box background={"trueGray.100"} padding={3} borderRadius={10} mt={5}>
         <Text>Tempo de prova</Text>
-        <Heading>
-          {minutes >= 10 ? minutes : `0${minutes}`}:
-          {seconds >= 10 ? seconds : `0${seconds}`}
-        </Heading>
+        <Heading>{time}</Heading>
       </Box>
       <Button
         width="100%"

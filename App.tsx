@@ -17,27 +17,18 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
 import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
 import * as StoreReview from "expo-store-review";
-import { useState } from "react";
 import { Linking } from "react-native";
 import QuizScreen from "./screens/Quiz";
 import FinishQuiz from "./screens/FinishQuiz";
-import { Button as RNButton } from "react-native";
-/**
- * TODOs:
- *
- * 5) Cadastrar mais perguntas
- * 7) Botão back do Android tem que acionar o botão de Encerrar
- * 8) Título no Android do Finish Quiz está errado
- * 9) Persistir na tela final para o LocalStorage de Ranking
- * 10) Incluir AdMob
- * */
 
 const HomeScreen = ({ navigation }: any) => {
   return (
     <Box flex="1" alignItems="center" justifyContent="center" px={10}>
       <StatusBar style="auto" />
-      <Illustration width="100%" height="30%" />
-      <Heading mt={2}>Simulado Prova CNH</Heading>
+      <Box background="coolGray.300" borderRadius="20" width="100%" padding="5">
+        <Illustration width="100%" height="200px" />
+      </Box>
+      <Heading mt={3}>Simulado Prova CNH</Heading>
       <Text textAlign={"center"} fontSize="sm" mt={2}>
         Conteúdo atualizado para 2022. Preparado(a)?
       </Text>
