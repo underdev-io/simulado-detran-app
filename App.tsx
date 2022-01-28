@@ -8,13 +8,12 @@ import {
   Row,
   Column,
   VStack,
-  Radio,
+  Image,
   extendTheme,
 } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Illustration from "./assets/undraw_fast_car_p-4-cu.svg";
 import Illustration2 from "./assets/undraw_no_data_re_kwbl.svg";
 import * as StoreReview from "expo-store-review";
 import { Linking } from "react-native";
@@ -24,12 +23,20 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format, parseJSON } from "date-fns";
 
+const Illustration = require("./assets/icon.png");
+
 const HomeScreen = ({ navigation }: any) => {
   return (
     <Box flex="1" alignItems="center" justifyContent="center" px={10}>
       <StatusBar style="auto" />
-      <Box background="coolGray.300" borderRadius="20" width="100%" padding="5">
-        <Illustration width="100%" height="200px" />
+      <Box width="100%" borderRadius={10} overflow={"hidden"} height={240}>
+        <Image
+          source={Illustration}
+          resizeMode="cover"
+          width="100%"
+          height="100%"
+          alt="Ilustração de pessoa sentada no veículo"
+        />
       </Box>
       <Heading mt={3}>Simulado Prova CNH</Heading>
       <Text textAlign={"center"} fontSize="sm" mt={2}>
